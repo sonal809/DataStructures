@@ -1,0 +1,5 @@
+Base	modulo	Pattern length	String Length	Correct Matches	False Positive	Running Time
+26		97			20				31				1				0			1
+26		97			5				31				1				0			0
+26		97			7				19				1				0			1
+26		97			22				31				0				1			4
