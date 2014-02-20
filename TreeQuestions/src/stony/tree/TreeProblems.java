@@ -105,7 +105,7 @@ public class TreeProblems {
 		}
 		else
 			return equalTrees(n1.left,n2.left) && equalTrees(n1.right, n2.right);
-		
+
 	}
 
 	//Convert a sorted array to a binary search tree
@@ -298,5 +298,37 @@ public class TreeProblems {
 			}
 			return node;
 		}
+
+
+		//Print the paths from the root to the leaf
+
+		public static void printPaths(Node root){
+			int[] path=new int[100];
+			printPaths(root, path, 0);
+
+		}
+
+		private static void printPaths(Node root, int[] path, int pathLen){
+			if( root== null) return;
+
+			path[pathLen]=root.data;
+			pathLen++;
+
+			if(root.right==null && root.left==null){
+				printArray(path, pathLen);
+			}
+			else{
+			printPaths(root.right, path, pathLen);
+			printPaths(root.left, path, pathLen);
+			}
+			}
+
+		private static void printArray(int[] path,int pathLen){
+			for(int i=0; i<pathLen; i++){
+				System.out.print(path[i] + " ");
+			}
+			System.out.println();
+		}
+
 
 };
