@@ -1,0 +1,11 @@
+package test;
+
+public class Operation {
+	
+	public static Node minimiseTree(Node root,int min, int max){
+		
+		//System.out.println(min + " " + max);
+		return root;
+	}
+
+}

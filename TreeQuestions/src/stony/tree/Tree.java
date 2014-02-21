@@ -21,7 +21,7 @@ class Node{
 	public String toString() {
 		// TODO Auto-generated method stub
 		return data+"";
-		Object
+
 	}
 }
 public class Tree {
@@ -234,8 +234,8 @@ public class Tree {
 		int pre[]={4,3,2,1,6,5,8,7,10};
 		int post[]={1,2,3,5,7,10,8,6,4};
 	//	Node root=TreeProblems.buildTree(in, pre, 0, in.length-1, 0, pre.length-1);
-		Node root=TreeProblems.buildTree2(in, post, 0, in.length-1, 0, post.length-1);
-		System.out.println(root.data);
+		//Node root=TreeProblems.buildTree2(in, post, 0, in.length-1, 0, post.length-1);
+		//System.out.println(root.data);
 		/*System.out.println("\n tree1:");
 		//Traversal.BFS(t1);
 		//t1.height(t1.root);
@@ -286,5 +286,9 @@ public class Tree {
 		Tree rTree=TreeProblems.mirrorTree(t1);
 		Traversal.BFS(rTree);
 		Traversal.inorder(rTree);
+
+		TreeProblems.printPaths(t1.root);
+		TreeProblems.duplicateTree(t1.root);
+		Traversal.inorder(t1);
 	}
 }

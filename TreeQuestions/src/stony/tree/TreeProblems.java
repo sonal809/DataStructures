@@ -330,5 +330,29 @@ public class TreeProblems {
 			System.out.println();
 		}
 
+		//Change the tree by inserting a duplicate node to each node's left
+
+		public static void duplicateTree(Node node){
+			if(node == null){
+				return;
+			}
+
+			duplicateTree(node.left);
+			duplicateTree(node.right);
+
+
+			if(node.left != null){
+				Node temp=node.left;
+				node.left=new Node(node.data);
+				node.left.left=temp;
+			}
+
+			else if (node.left==null){
+				node.left=new Node(node.data);
+			}
+
+
+		}
+
 
 };

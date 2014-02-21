@@ -1,0 +1,357 @@
+package stony.tree;
+import java.util.*;
+
+public class TreeProblems {
+
+	//TO check if the height of the two subtrees at any node donot differ by more than 1
+	static void balancedTree(Tree tree){
+		Node current=tree.root;
+
+		Queue<Node> queue=new LinkedList<Node>();
+		boolean done=false;
+		int heightDiff=0;
+		int flag=0;
+		while(!done){
+			if(current==null && queue.isEmpty()){
+				done=true;
+				if(flag==0){
+					System.out.println(" \n Tree is balanced");
+					return;
+				}
+			}
+			if(current==null){
+				current=queue.poll();
+			}
+			if(current.visited==true){
+				int hLeft=tree.height(current.left);
+				int hRight=tree.height(current.right);
+				heightDiff=hLeft-hRight;
+				current=queue.poll();
+				if(heightDiff>1 || heightDiff<-1){
+					System.out.println("\n Tree is not balanced");
+					flag=1;
+					return;
+				}
+			}
+			else if(current.visited==false){
+			current.visited=true;
+			queue.add(current.left);
+			queue.add(current.right);
+			continue;
+			}
+		}
+
+	}
+	//Check whether t1 is a subtree of t2
+	static void subtree(Tree t1, Tree t2){
+		boolean flag=false;
+		if(t1.noOfNodes(t1.root)>t2.noOfNodes(t2.root)){
+			System.out.println("Number of nodes in tree1 is large so its not a subtree");
+			return;
+		}
+		else if(t1.noOfNodes(t1.root)==t2.noOfNodes(t2.root)){
+			flag=equalTrees(t1.root,t2.root);
+			if(flag) System.out.println("Both trees are same");
+			else System.out.println("Both trees have same number of nodes but are different");
+			return;
+		}
+		else{
+			Node current=t2.root;
+			Queue<Node> q1=new LinkedList<>();
+			q1.add(current);
+			boolean done=false;
+			while(!done){
+				if(current==null && q1.isEmpty()){
+					done=true;
+				}
+				if(current == null){
+					current=q1.poll();
+					continue;
+				}
+				else{
+				q1.add(current.left);
+				q1.add(current.right);
+				current=q1.poll();
+				if(current != null && current.data==t1.root.data){
+					flag=equalTrees(t1.root,current);
+				}
+				else{
+					continue;
+				}
+				if(!flag){
+					continue;
+				}
+				}
+			}
+			if (flag){
+				System.out.println("\n tree1 is a subtree of tree2");
+			}
+			else{
+				System.out.println("tree1 is not a subtree of t2");
+			}
+		}
+
+	}
+
+	private static boolean equalTrees(Node n1,Node n2){
+		if (n1==null && n2==null){
+			return true;
+		}
+		if(n1==null || n2==null){
+			return false;
+		}
+		if(n1.data != n2.data){
+			return false;
+		}
+		else
+			return equalTrees(n1.left,n2.left) && equalTrees(n1.right, n2.right);
+
+	}
+
+	//Convert a sorted array to a binary search tree
+	static Tree makeTree(int arr[]){
+		Tree tree=new Tree();
+		int start=0;
+		int end=arr.length-1;
+		tree.root=makeNode(arr,start,end);
+		return tree;
+	}
+
+	private static Node makeNode(int arr[], int start, int end){
+		if(end <start) return null;
+		else{
+			int mid=(start+end)/2;
+			Node newNode=new Node(arr[mid]);
+			newNode.right=makeNode(arr,mid,end);
+			newNode.left=makeNode(arr,start,mid);
+			return newNode;
+		}
+
+	}
+
+	//Prog to create a linkedlist at all depths
+
+	static ArrayList<LinkedList<Node>> bfslist (Tree tree) {
+		Queue<Node> q = new LinkedList<>();
+		ArrayList<LinkedList<Node>> arrayofLists=new ArrayList<>();
+		LinkedList<Node> levelList=new LinkedList<>();
+		levelList.add(tree.root);
+		//int index=0;
+		Node current=null;;
+		boolean done=false;
+		while(!done){
+
+			System.out.println(levelList);
+			if(current==null && q.isEmpty() && levelList.isEmpty()){
+				done=true;
+				return arrayofLists;
+			}
+
+			if(levelList.size() != 0){
+				if(q.isEmpty()){
+					arrayofLists.add(new LinkedList<Node>(levelList));
+				}
+			}
+
+			if(levelList.size()>0){
+				System.out.println("removing from the level list");
+				current=levelList.remove();
+				if(current.left !=null) q.add(current.left);
+				if(current.right != null) q.add(current.right);
+
+				continue;
+			}
+			else{
+				while(!q.isEmpty()){
+					current=q.poll();
+					levelList.add(current);
+				}
+			}
+			if(q.isEmpty() && levelList.size() == 0){
+				return arrayofLists;
+			}
+			for(int i=0;i<levelList.size();i++){
+				System.out.print("level list---->"+ levelList.get(i));
+			}
+			System.out.println();
+			//levelList.clear();
+			}
+		return arrayofLists;
+	}
+
+	//Prog to find the deepest left node in a tree. Some problems in it man.
+
+	static void deepestLeftNode(Tree tree){
+		Node current=tree.root;
+		if (current ==null){
+			return;
+		}
+		Node deepestleft=null;
+		int maxlevel=0;
+		deepLeft(false, current, 0	, maxlevel, deepestleft);
+	}
+		private static int deepLeft(boolean isLeft, Node node, int level, int maxlevel, Node deepestLeft){
+			if (node==null) return maxlevel;
+			if(isLeft && node.left == null && node.right == null ){
+				System.out.println("maxlevel---->"+maxlevel);
+				maxlevel=level;
+				deepestLeft=node;
+				System.out.print(" \n the deepest lvel: "+ maxlevel +" and node is "+ node.data);
+				return maxlevel;
+			}
+			System.out.print("\n On the node:"+node.data);
+			System.out.print("  maxlevel  "+maxlevel + "  level: " +level);
+			maxlevel=deepLeft(true, node.left, level+1, maxlevel, deepestLeft);
+			maxlevel=deepLeft(false, node.right, level+1, maxlevel, deepestLeft);
+			return maxlevel;
+		}
+
+		//Write a prog to convert a tree to its mirror tree
+
+		static Tree mirrorTree(Tree tree){
+			Tree resultTree=new Tree();
+			Node current=tree.root;
+			resultTree.root=new Node(tree.root.data);
+			Node rcurrent=resultTree.root;
+			mirrorTree(current, rcurrent);
+			return resultTree;
+
+		}
+		private static void mirrorTree(Node node, Node result){
+			if(node.right == null && node.left== null)	return;
+			else{
+			if(node.right != null){
+				result.left=new Node(node.right.data);
+				mirrorTree(node.right, result.left);
+			}
+			if(node.left != null){
+				result.right=new Node(node.left.data);
+				mirrorTree(node.left,result.right);
+			}
+			}
+
+		}
+		//given inorder and postorder/preorder traversal find the tree.
+		private static int searchIndex(int arr[], int value){
+			for(int i=0;i<arr.length;i++){
+				if(arr[i]==value){
+					return i;
+				}
+			}
+					return -1;
+		}
+
+		static Node buildTree(int in[], int pre[], int instart, int inend, int prestart, int preend){
+			if(instart>inend) return null;
+			Node root=new Node(pre[prestart]);
+			int rindex=searchIndex(in, root.data);
+			root.left=buildTree(in,pre, instart, rindex-1, prestart+1, rindex-instart+prestart );
+			root.right=buildTree(in, pre, rindex+1, inend, rindex+1, preend);
+			return root;
+		}
+
+		//given inorder and postorder traversal build the tree
+
+		static Node buildTree2(int in[], int post[], int instart, int inend, int poststart, int postend)
+		{
+			if(instart>inend || inend<0) return null;
+			Node root=new Node(post[postend]);
+			int rindex=searchIndex(in, root.data);
+			root.left=buildTree2(in, post, instart, rindex-1, poststart, rindex-1);
+			root.right=buildTree2(in, post, rindex+1, inend, rindex, postend-1);
+			return root;
+		}
+
+		//find the inorder successor of a node
+		static Node inorderSucc(Tree tree, Node node){
+			if(node.right != null){
+				return leftmostChild(node.right);
+			}
+			else{
+				//Come on the left subtree of the parent.
+				Node nodePar=node.parent;
+				Node temp=node;
+				if(nodePar.left==node){
+					return nodePar;
+				}
+				while( nodePar != null && nodePar.left != temp){
+					//System.out.println("parent node::"+nodePar.data);
+					temp=nodePar;
+					nodePar=nodePar.parent;
+				}
+				if(nodePar==null){
+					System.out.println("last node in inorder traversal");
+					return null;
+				}
+
+				return nodePar;
+			}
+		}
+
+		private static Node leftmostChild(Node node){
+			if (node == null){
+				return null;
+			}
+
+			while(node.left != null){
+				node=node.left;
+			}
+			return node;
+		}
+
+
+		//Print the paths from the root to the leaf
+
+		public static void printPaths(Node root){
+			int[] path=new int[100];
+			printPaths(root, path, 0);
+
+		}
+
+		private static void printPaths(Node root, int[] path, int pathLen){
+			if( root== null) return;
+
+			path[pathLen]=root.data;
+			pathLen++;
+
+			if(root.right==null && root.left==null){
+				printArray(path, pathLen);
+			}
+			else{
+			printPaths(root.right, path, pathLen);
+			printPaths(root.left, path, pathLen);
+			}
+			}
+
+		private static void printArray(int[] path,int pathLen){
+			for(int i=0; i<pathLen; i++){
+				System.out.print(path[i] + " ");
+			}
+			System.out.println();
+		}
+
+		//Change the tree by inserting a duplicate node to each node's left
+
+		public static void duplicateTree(Node node){
+			if(node == null){
+				return;
+			}
+
+			duplicateTree(node.left);
+			duplicateTree(node.right);
+
+			if(node.left != null){
+				Node temp=node.left;
+				node.left=new Node(node.data);
+				node.left.left=temp;
+			}
+
+			else{
+				node.left=new Node(node.data);
+			}
+
+
+		}
+
+
+};

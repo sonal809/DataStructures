@@ -1,0 +1,33 @@
+
+public class MoreProbs {
+
+		//Print the indexes where the sume from the starting index to the specified
+		//is same as the sum of the numbers from backward.
+		public static void equalSum(int[] arr){
+			int frontSum=0, backsum=0;
+			int count=0;
+			for(int i=0;i<arr.length;i++){
+				backsum=backsum+arr[i];
+			}
+			for(int i=0;i<arr.length;i++){
+				backsum=backsum-arr[i];
+				if(frontSum==backsum){
+					count++;
+					System.out.println(i + " ");
+				}
+				frontSum=frontSum+arr[i];
+			}
+
+			System.out.println("index is: " + count);
+
+		}
+
+		public static void main(String args[]){
+			int[] arr=new int[args.length];
+			for(int i=0;i<args.length;i++){
+				arr[i]=Integer.parseInt(args[i]);
+			}
+
+			equalSum(arr);
+		}
+}

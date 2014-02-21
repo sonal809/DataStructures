@@ -1,0 +1,30 @@
+import java.util.*;
+
+import stony.tree.Node;
+
+public class Operation {
+
+	public static void minimiseTree(Node root,int min, int max){
+
+		if(root==null) return;
+
+		minimiseTree(root.left, min, max);
+		minimiseTree(root.right, min, max);
+
+		if(root.data< min){
+			if(root.right != null)
+			root=root.right;
+			else
+				root=null;
+		}
+
+		if(root.data>max){
+			if(root.left != null)
+			root=root.left;
+			else
+				root=null;
+		}
+
+	}
+}
+

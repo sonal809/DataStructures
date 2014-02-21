@@ -233,13 +233,16 @@ public class Arrays {
 		int [] arr3={-1,5,-3,-2,2};
 		Arrays.maxSub(arr3);
 		int [] arr4={1,2,3,4,5};
-		Arrays.findPivot(arr4, 0, arr4.length);*/
+		//Arrays.findPivot(arr4, 0, arr4.length);
 		/*int[] arr5={1,2,3,5};
 		int[] arr6={0,4,6,7,};
 		Arrays.mergeMedian(arr5, arr6);*/
 		int[] arr={4,5,9,1,5,6,8};
 		//Arrays.rotArray(arr, 3);
 		Arrays.maxDiff(arr);
+		int [] arr3={-1,5,-3,4,-2,2};
+		int [] arr5={2,-1};
+		Arrays.maxSub(arr5);
 	}
 
 

@@ -1,0 +1,85 @@
+
+public class BitMapClass {
+	//Write a function to add two numbers without using + operator
+
+	//This uses bit manipulation
+
+	//Adding without carry leads to XOR
+
+	//Adding with only carry is an AND but shifted
+
+	static int add(int a, int b){
+		//System.out.println();
+		//System.out.print(" call");
+		if(b==0) return a;
+		int sum = a ^ b;
+		//System.out.print(" sum:" + sum);
+		int carry= (a & b)<<1;
+		//System.out.print(" carry:" + carry);
+		return add(sum,carry);
+	}
+
+
+	static int subtract(int a, int b){
+		return add(a, add(~b,1));
+	}
+
+	//function to pack 4 characters into an integer
+
+	static int pack(char a, char b, char c, char d){
+		int p=0;
+		int aInt= a;
+		int bInt=b;
+		int cInt=c;
+		int dInt=d;
+		//System.out.println(Integer.toBinaryString(dInt));
+
+		return p | aInt<<24 | bInt<<16 | cInt<<8 | dInt;
+	}
+
+	//Print the 8 bits of an integer separately
+
+	static void printInt(int a){
+		String res="";
+		for(int i=31; i>=0; i--){
+
+			if ((a &(1<<i)) != 0){
+				res += "1";
+			}
+			else
+				res +="0";
+
+		if(i%8==0){
+			res +=" ";
+			}
+		}
+
+		System.out.println(res);
+
+	}
+
+	//Implementing a right circular shift
+
+	static void rightCirc(int a, int n, int noOfbits){
+		int res=0;
+		int leftShift=39<<(noOfbits-n);
+		System.out.println(Integer.toBinaryString(leftShift));
+		if(((leftShift & 1<<(noOfbits)) != 0)){
+			leftShift=leftShift & ~(1<<(noOfbits));
+			System.out.println(Integer.toBinaryString(leftShift));
+		}
+		System.out.println(Integer.toBinaryString(a));
+			res=a>>n | leftShift;
+		System.out.println(Integer.toBinaryString(res));
+
+	}
+	public static void main(String args[]){
+		int result=add(45,75);
+		//System.out.println(result);
+		//int subresult=subtract(45,75);
+		//System.out.println(subresult);
+		printInt(pack('a','b','c','d'));
+		rightCirc(39,4,8);
+		//System.out.println("\n" +Integer.toBinaryString(23));
+	}
+}

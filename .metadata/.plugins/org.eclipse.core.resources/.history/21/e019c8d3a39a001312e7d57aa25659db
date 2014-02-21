@@ -1,0 +1,28 @@
+
+
+
+
+public class Operation {
+
+	public static void minimiseTree(Node root,int min, int max){
+
+		if(root==null) return;
+
+		if(root.data< min){
+			if(root.right != null)
+			root=root.right;
+		}
+
+		if(root.data>max){
+			if(root.left != null)
+			root=root.left;
+		}
+
+		minimiseTree(root.left, min, max);
+		minimiseTree(root.right, min, max);
+
+
+
+	}
+}
+

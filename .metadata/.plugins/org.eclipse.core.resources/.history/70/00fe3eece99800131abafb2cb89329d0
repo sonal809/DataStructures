@@ -1,0 +1,16 @@
+
+
+public class Operation {
+
+	public static Node minimiseTree(Node root,int min, int max){
+
+		System.out.println(min + " " + max);
+		Node current=root;
+
+		if(current.left.data < min){
+			current=null;
+		}
+		return root;
+	}
+}
+
